@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VeriLens — Verify the Facts. Trust the Evidence.</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div id="app">
+    <!-- NAV -->
+    <nav class="nav">
+      <div class="nav-inner">
+        <a href="#" class="logo" onclick="showPage('landing')">
+          <span class="logo-mark">◉</span> VeriLens
+        </a>
+        <div class="nav-links">
+          <a href="#" onclick="showPage('landing')">Home</a>
+          <a href="#" onclick="showPage('verify')">Verify</a>
+          <a href="#" onclick="showPage('dashboard')">Dashboard</a>
+          <a href="#" onclick="showPage('history')">History</a>
+          <a href="#" onclick="showPage('learn')">Learn</a>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="showPage('verify')">Try Free</button>
+      </div>
+    </nav>
+
+    <!-- ========== LANDING ========== -->
+    <section id="page-landing" class="page active">
+      <div class="hero">
+        <div class="hero-badge">AI-POWERED FACT INTELLIGENCE</div>
+        <h1>Never Be Fooled<br><span class="gradient">Again.</span></h1>
+        <p class="hero-sub">
+          VeriLens uses multi-layer AI to fact-check claims, extract evidence from text, URLs and screenshots,
+          and deliver clear, source-backed verdicts — before you share, engage, or believe.
+        </p>
+        <div class="hero-cta">
+          <button class="btn btn-primary btn-lg" onclick="showPage('verify')">Start fact-checking free →</button>
+          <button class="btn btn-ghost btn-lg" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">See how it works</button>
+        </div>
+        <div class="hero-stats">
+          <div><strong>Multi-format</strong><span>Text · URL · Image</span></div>
+          <div><strong>Claim-level</strong><span>Individual analysis</span></div>
+          <div><strong>Two-sided</strong><span>Support + Contradict</span></div>
+          <div><strong>Explainable</strong><span>Source-backed</span></div>
+        </div>
+      </div>
+
+      <div id="how" class="section">
+        <h2 class="section-title">How VeriLens Works</h2>
+        <div class="steps">
+          <div class="step"><div class="step-num">01</div><h3>Submit</h3><p>Paste text, drop a URL, or upload a screenshot of a suspicious claim.</p></div>
+          <div class="step"><div class="step-num">02</div><h3>Extract</h3><p>AI identifies individual factual claims that can be verified.</p></div>
+          <div class="step"><div class="step-num">03</div><h3>Evidence</h3><p>Retrieves supporting and contradicting sources from credible origins.</p></div>
+          <div class="step"><div class="step-num">04</div><h3>Verdict</h3><p>Clear result with explanation and links you can inspect yourself.</p></div>
+        </div>
+      </div>
+
+      <div class="section dark-section">
+        <h2 class="section-title">Built for Students First</h2>
+        <p class="section-desc">Primary audience: college & school students who encounter viral claims daily. Expanding to teachers, institutions and the general public.</p>
+        <div class="feature-grid">
+          <div class="feature-card"><h4>Text & Messages</h4><p>WhatsApp forwards, tweets, news snippets — paste and verify.</p></div>
+          <div class="feature-card"><h4>Article URLs</h4><p>Drop a link. We extract the content and analyse the claims.</p></div>
+          <div class="feature-card"><h4>Screenshots</h4><p>OCR reads the text from images so nothing slips through.</p></div>
+          <div class="feature-card"><h4>Learning Hub</h4><p>Quizzes and tips that teach how to spot misinformation yourself.</p></div>
+        </div>
+      </div>
+
+      <div class="section cta-section">
+        <h2>Verify the Facts. Trust the Evidence.</h2>
+        <button class="btn btn-primary btn-lg" onclick="showPage('verify')">Open VeriLens →</button>
+      </div>
+    </section>
+
+    <!-- ========== VERIFY ========== -->
+    <section id="page-verify" class="page">
+      <div class="page-header">
+        <h1>Verify Information</h1>
+        <p>Paste a claim, enter a URL, or upload a screenshot.</p>
+      </div>
+
+      <div class="verify-tabs">
+        <button class="tab active" data-tab="text" onclick="switchTab('text')">Text</button>
+        <button class="tab" data-tab="url" onclick="switchTab('url')">URL</button>
+        <button class="tab" data-tab="image" onclick="switchTab('image')">Screenshot</button>
+      </div>
+
+      <div class="verify-panel">
+        <!-- TEXT -->
+        <div id="tab-text" class="tab-content active">
+          <textarea id="text-input" placeholder="Paste a news claim, social media post, or forwarded message here...
+
+Example: Cleopatra lived closer in time to the Moon landing than to the pyramids being built."></textarea>
+          <div class="panel-actions">
+            <button class="btn btn-primary" onclick="verifyText()" id="btn-text">Analyse Claim →</button>
+          </div>
+        </div>
+
+        <!-- URL -->
+        <div id="tab-url" class="tab-content">
+          <input type="url" id="url-input" class="input" placeholder="https://example.com/news-article" />
+          <p class="hint">Public news articles work best. Paywalled or heavily dynamic pages may fail.</p>
+          <div class="panel-actions">
+            <button class="btn btn-primary" onclick="verifyUrl()" id="btn-url">Fetch & Analyse →</button>
+          </div>
+        </div>
+
+        <!-- IMAGE -->
+        <div id="tab-image" class="tab-content">
+          <div class="dropzone" id="dropzone" onclick="document.getElementById('image-input').click()">
+            <input type="file" id="image-input" accept="image/*" hidden onchange="handleImage(event)" />
+            <div class="dropzone-inner">
+              <span class="drop-icon">🖼</span>
+              <p>Click or drop a screenshot here</p>
+              <p class="hint">PNG, JPG up to ~5 MB. OCR will extract visible text.</p>
+            </div>
+          </div>
+          <div id="image-preview" class="image-preview hidden"></div>
+          <div class="panel-actions">
+            <button class="btn btn-primary" onclick="verifyImage()" id="btn-image" disabled>Run OCR & Analyse →</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="loading" class="loading hidden">
+        <div class="spinner"></div>
+        <p>Extracting claims & retrieving evidence…</p>
+      </div>
+    </section>
+
+    <!-- ========== RESULTS ========== -->
+    <section id="page-results" class="page">
+      <div class="page-header">
+        <button class="btn btn-ghost btn-sm" onclick="showPage('verify')">← New verification</button>
+        <h1>Verification Results</h1>
+        <p id="result-meta"></p>
+      </div>
+      <div id="results-container"></div>
+    </section>
+
+    <!-- ========== DASHBOARD ========== -->
+    <section id="page-dashboard" class="page">
+      <div class="page-header">
+        <h1>Dashboard</h1>
+        <p>Your verification activity at a glance.</p>
+      </div>
+      <div class="stats-row" id="dash-stats">
+        <div class="stat-card"><div class="stat-val" id="stat-analyses">—</div><div class="stat-label">Analyses</div></div>
+        <div class="stat-card"><div class="stat-val" id="stat-claims">—</div><div class="stat-label">Claims checked</div></div>
+        <div class="stat-card"><div class="stat-val">4</div><div class="stat-label">Verdict types</div></div>
+      </div>
+      <h3 class="subsection">Recent Activity</h3>
+      <div id="dash-recent" class="history-list"></div>
+    </section>
+
+    <!-- ========== HISTORY ========== -->
+    <section id="page-history" class="page">
+      <div class="page-header">
+        <h1>Verification History</h1>
+        <p>Previously analysed claims stored in this session’s database.</p>
+      </div>
+      <div id="history-list" class="history-list"></div>
+    </section>
+
+    <!-- ========== LEARN ========== -->
+    <section id="page-learn" class="page">
+      <div class="page-header">
+        <h1>Student Learning Hub</h1>
+        <p>Build your own misinformation radar.</p>
+      </div>
+      <div class="learn-grid">
+        <div class="learn-card">
+          <h3>What is Misinformation?</h3>
+          <p>False or inaccurate information spread without the intent to deceive. Still harmful — especially when it goes viral.</p>
+        </div>
+        <div class="learn-card">
+          <h3>What is Disinformation?</h3>
+          <p>Deliberately false information created and shared to mislead, manipulate opinion, or cause harm.</p>
+        </div>
+        <div class="learn-card">
+          <h3>Red Flags in Headlines</h3>
+          <p>ALL CAPS, emotional language, “shocking”, missing sources, or claims that feel too perfect. Pause before sharing.</p>
+        </div>
+        <div class="learn-card">
+          <h3>Check the Source</h3>
+          <p>Who published it? What is their track record? Can you find the same claim on established outlets or primary sources?</p>
+        </div>
+        <div class="learn-card">
+          <h3>Context Matters</h3>
+          <p>Old stories presented as new, cropped videos, or real images with false captions are common manipulation tactics.</p>
+        </div>
+        <div class="learn-card">
+          <h3>Use VeriLens</h3>
+          <p>When in doubt, paste the claim here. Look at both supporting and contradicting evidence before deciding.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>VeriLens · Verify the Facts. Trust the Evidence. · Prototype for educational use</p>
+    </footer>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
