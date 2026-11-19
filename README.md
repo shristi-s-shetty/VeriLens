@@ -12,7 +12,7 @@ cd backend
 python3 server.py
 ```
 
-Then open: **http://localhost:5000**
+Then open: **https://verilens-y7ug.onrender.com**
 
 ## What Works in This Prototype
 
